@@ -31,7 +31,7 @@ dependencies {
     implementation 'co.aikar:acf-paper:0.5.1-SNAPSHOT'
 
     //Database MySQL HikariCP
-    implementation 'com.zaxxer:HikariCP:4.0.3'
+    implementation 'com.zaxxer:HikariCP:5.0.1'
 
     //annotations processor
     annotationProcessor 'org.projectlombok:lombok:1.18.28'
