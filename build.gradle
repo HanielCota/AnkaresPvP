@@ -1,0 +1,62 @@
+plugins {
+    id 'java'
+    id 'com.github.johnrengelman.shadow' version '8.1.1'
+}
+
+// Set project information
+group = 'com.github.hanielfialho'
+version = '1.0-SNAPSHOT'
+
+// Configure build tasks
+tasks.build.dependsOn 'shadowJar'
+
+// Configure repositories for dependency resolution
+repositories {
+    mavenCentral()
+    maven { url = "https://repo.aikar.co/content/groups/aikar/" }
+    maven { url = 'https://oss.sonatype.org/content/repositories/snapshots' }
+    maven { url = 'https://oss.sonatype.org/content/repositories/central' }
+}
+
+
+// Define dependencies
+dependencies {
+    //dependencies for minecraft
+    compileOnly 'org.spigotmc:spigot:1.8.8-R0.1-SNAPSHOT'
+
+    //cache framework
+    implementation 'com.github.ben-manes.caffeine:caffeine:2.9.3'
+
+    //commands framework
+    implementation 'co.aikar:acf-paper:0.5.1-SNAPSHOT'
+
+    //Database MySQL HikariCP
+    implementation 'com.zaxxer:HikariCP:4.0.3'
+
+    //annotations processor
+    annotationProcessor 'org.projectlombok:lombok:1.18.28'
+    compileOnly 'org.projectlombok:lombok:1.18.28'
+}
+
+
+// Configure Java compilation
+compileJava {
+    options.encoding = "UTF-8"
+    sourceCompatibility = 1.8
+}
+
+// Configure Shadow JAR task
+shadowJar {
+    relocate 'co.aikar.commands', 'com.github.hanielcota.commands'
+    relocate 'co.aikar.locales', 'com.github.hanielcota.com.github.locales'
+}
+
+// Process resources
+processResources {
+    def props = [version: version]
+    inputs.properties props
+    filteringCharset 'UTF-8'
+    filesMatching('plugin.yml') {
+        expand props
+    }
+}
