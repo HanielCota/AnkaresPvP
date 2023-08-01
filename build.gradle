@@ -42,8 +42,9 @@ dependencies {
 // Configure Java compilation
 compileJava {
     options.encoding = "UTF-8"
-    sourceCompatibility = 1.8
+    sourceCompatibility = 17
 }
+
 
 // Configure Shadow JAR task
 shadowJar {

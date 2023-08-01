@@ -6,10 +6,10 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 
-public class TeamListener implements Listener {
+public class PlayerJoinListener implements Listener {
     private final AnkaresPlugin plugin;
 
-    public TeamListener(AnkaresPlugin plugin) {
+    public PlayerJoinListener(AnkaresPlugin plugin) {
         this.plugin = plugin;
     }
 
@@ -20,5 +20,7 @@ public class TeamListener implements Listener {
         if (!plugin.getTeamManager().isPlayerInTeam(player)) {
             plugin.getTeamManager().addPlayerToRedTeam(player);
         }
+
+        event.setJoinMessage(null);
     }
 }
