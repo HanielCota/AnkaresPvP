@@ -116,7 +116,7 @@ public class ConfigUtil extends FileConfiguration {
         return this.configuration.createSection(s);
     }
 
-    public void load(Reader reader) throws java.io.IOException, org.bukkit.configuration.InvalidConfigurationException {
+    public void load(Reader reader) throws IOException, InvalidConfigurationException {
         this.configuration.load(reader);
     }
 
@@ -156,7 +156,7 @@ public class ConfigUtil extends FileConfiguration {
         return Enum.valueOf(enumClazz, path);
     }
 
-    public void load(File file) throws java.io.IOException, org.bukkit.configuration.InvalidConfigurationException {
+    public void load(File file) throws IOException, InvalidConfigurationException {
         this.configuration.load(file);
     }
 
@@ -180,7 +180,7 @@ public class ConfigUtil extends FileConfiguration {
         return this.configuration.isVector(s);
     }
 
-    public void load(String file) throws java.io.IOException, org.bukkit.configuration.InvalidConfigurationException {
+    public void load(String file) throws IOException, InvalidConfigurationException {
         this.configuration.load(file);
     }
 
@@ -276,7 +276,7 @@ public class ConfigUtil extends FileConfiguration {
         return this.configuration.isColor(s);
     }
 
-    public void load(InputStream stream) throws java.io.IOException, org.bukkit.configuration.InvalidConfigurationException {
+    public void load(InputStream stream) throws IOException, InvalidConfigurationException {
         this.configuration.load(stream);
     }
 
@@ -296,7 +296,7 @@ public class ConfigUtil extends FileConfiguration {
         return this.configuration.getDefaultSection();
     }
 
-    public void save(File file) throws java.io.IOException {
+    public void save(File file) throws IOException {
         this.configuration.save(file);
     }
 
@@ -361,7 +361,7 @@ public class ConfigUtil extends FileConfiguration {
         return this.configuration.getList(s);
     }
 
-    public void loadFromString(String s) throws org.bukkit.configuration.InvalidConfigurationException {
+    public void loadFromString(String s) throws InvalidConfigurationException {
         this.configuration.loadFromString(s);
     }
 
