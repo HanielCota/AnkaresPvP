@@ -1,10 +1,12 @@
 package com.github.hanielcota.teams;
 
+import lombok.Getter;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.Team;
 
+@Getter
 public class TeamManager {
 
     private final Team blueTeam;
@@ -33,7 +35,7 @@ public class TeamManager {
         addPlayerToTeam(player, redTeam, ChatColor.RED + "Você foi adicionado ao Time Vermelho.");
     }
 
-    private void addPlayerToTeam(Player player, Team team, String message) {
+    public void addPlayerToTeam(Player player, Team team, String message) {
         team.addEntry(player.getName());
         player.sendMessage(message);
     }
@@ -41,7 +43,6 @@ public class TeamManager {
     public void removePlayerFromTeams(Player player) {
         blueTeam.removeEntry(player.getName());
         redTeam.removeEntry(player.getName());
-        player.sendMessage(ChatColor.GREEN + "Você foi removido de todos os times.");
     }
 
     public boolean isPlayerInTeam(Player player) {
@@ -57,8 +58,30 @@ public class TeamManager {
         return null;
     }
 
-    public void clearTeams() {
+    public int getBlueTeamSize() {
+        return blueTeam.getSize();
+    }
+
+    public int getRedTeamSize() {
+        return redTeam.getSize();
+    }
+
+    public void unregisterTeams() {
         blueTeam.unregister();
         redTeam.unregister();
     }
+
+    public void clearTeamsOnStartup() {
+        clearTeam(blueTeam);
+        clearTeam(redTeam);
+    }
+
+    private void clearTeam(Team team) {
+        if (team != null) {
+            for (String entry : team.getEntries()) {
+                team.removeEntry(entry);
+            }
+        }
+    }
 }
+

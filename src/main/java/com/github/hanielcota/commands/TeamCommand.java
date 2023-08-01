@@ -3,6 +3,7 @@ package com.github.hanielcota.commands;
 import co.aikar.commands.BaseCommand;
 import co.aikar.commands.annotation.*;
 import com.github.hanielcota.AnkaresPlugin;
+import com.github.hanielcota.menus.SelectorTeamMenu;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.scoreboard.Team;
@@ -22,6 +23,7 @@ public class TeamCommand extends BaseCommand {
             Team playerTeam = plugin.getTeamManager().getPlayerTeam(player);
 
             if (playerTeam != null) {
+
                 player.sendMessage("§eVocê está no time: " + playerTeam.getDisplayName());
             } else {
                 player.sendMessage("§cVocê não está em nenhum time.");
@@ -68,5 +70,23 @@ public class TeamCommand extends BaseCommand {
             player.sendMessage("§aO jogador " + target.getName() + " foi movido para o Time Vermelho.");
             target.sendMessage("§aVocê foi movido para o Time Vermelho por " + player.getName() + ".");
         }
+    }
+
+    @Subcommand("remove")
+    public void onRemoveTeamCommand(Player player) {
+        Team playerTeam = plugin.getTeamManager().getPlayerTeam(player);
+
+        if (playerTeam == null) {
+            player.sendMessage("§cVocê não está em nenhum time.");
+            return;
+        }
+
+        plugin.getTeamManager().removePlayerFromTeams(player);
+        player.sendMessage("§aVocê foi removido do time " + playerTeam.getDisplayName() + ".");
+    }
+
+    @Subcommand("menu")
+    public void onMenuCommand(Player player) {
+        new SelectorTeamMenu(plugin, player).open(player);
     }
 }

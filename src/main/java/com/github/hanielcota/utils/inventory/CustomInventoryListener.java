@@ -52,7 +52,6 @@ public final class CustomInventoryListener implements Listener {
     @EventHandler
     public void onInventoryClick(InventoryClickEvent e) {
         if (e.getInventory().getHolder() instanceof CustomInventory customInventory) {
-
             boolean wasCancelled = e.isCancelled();
             e.setCancelled(true);
 
@@ -79,6 +78,7 @@ public final class CustomInventoryListener implements Listener {
 
         }
     }
+
 
     @EventHandler
     public void onPluginDisable(PluginDisableEvent e) {

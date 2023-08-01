@@ -10,6 +10,7 @@ import com.github.hanielcota.utils.ConfigUtil;
 import com.github.hanielcota.utils.inventory.CustomInventoryListener;
 import lombok.Getter;
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scoreboard.Scoreboard;
@@ -49,7 +50,7 @@ public final class AnkaresPlugin extends JavaPlugin {
         pluginManager.registerEvents(new PlayerJoinListener(this), this);
         pluginManager.registerEvents(new PlayerQuitListener(teamManager), this);
 
-        new CustomInventoryListener(this);
+        CustomInventoryListener.register(this);
     }
 
 
@@ -63,5 +64,7 @@ public final class AnkaresPlugin extends JavaPlugin {
 
         Scoreboard mainScoreboard = scoreboardManager.getMainScoreboard();
         teamManager = new TeamManager(mainScoreboard);
+
+        teamManager.clearTeamsOnStartup();
     }
 }
