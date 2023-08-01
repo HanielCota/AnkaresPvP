@@ -7,6 +7,7 @@ import com.github.hanielcota.listeners.PlayerJoinListener;
 import com.github.hanielcota.listeners.PlayerQuitListener;
 import com.github.hanielcota.teams.TeamManager;
 import com.github.hanielcota.utils.ConfigUtil;
+import com.github.hanielcota.utils.inventory.CustomInventoryListener;
 import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.PluginManager;
@@ -39,7 +40,7 @@ public final class AnkaresPlugin extends JavaPlugin {
         manager.registerCommand(new TeamCommand(this));
         manager.registerCommand(new WarpCommand(this));
 
-        getLogger().info("Commands registered!");
+        getLogger().info("Registration of commands successfully completed!");
     }
 
     private void registerListeners() {
@@ -47,7 +48,10 @@ public final class AnkaresPlugin extends JavaPlugin {
 
         pluginManager.registerEvents(new PlayerJoinListener(this), this);
         pluginManager.registerEvents(new PlayerQuitListener(teamManager), this);
+
+        new CustomInventoryListener(this);
     }
+
 
     private void loadTeamManager() {
         ScoreboardManager scoreboardManager = Bukkit.getScoreboardManager();

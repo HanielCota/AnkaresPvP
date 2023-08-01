@@ -196,7 +196,6 @@ public class ItemBuilder {
         return this;
     }
 
-    @SuppressWarnings("deprecation")
     public ItemBuilder setDyeColor(DyeColor color) {
         is.getData().setData(color.getDyeData());
         return this;
