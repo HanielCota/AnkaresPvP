@@ -1,16 +1,19 @@
 package com.github.hanielcota;
 
 import co.aikar.commands.PaperCommandManager;
+import com.github.hanielcota.commands.AbatesCommand;
+import com.github.hanielcota.commands.StartCommand;
 import com.github.hanielcota.commands.TeamCommand;
 import com.github.hanielcota.commands.WarpCommand;
-import com.github.hanielcota.listeners.PlayerJoinListener;
-import com.github.hanielcota.listeners.PlayerQuitListener;
+import com.github.hanielcota.listeners.*;
+import com.github.hanielcota.managers.GameStartManager;
+import com.github.hanielcota.managers.KillManager;
+import com.github.hanielcota.scoreboard.ScoreboardDesing;
 import com.github.hanielcota.teams.TeamManager;
 import com.github.hanielcota.utils.ConfigUtil;
 import com.github.hanielcota.utils.inventory.CustomInventoryListener;
 import lombok.Getter;
 import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scoreboard.Scoreboard;
@@ -21,10 +24,13 @@ public final class AnkaresPlugin extends JavaPlugin {
 
     private TeamManager teamManager;
     private ConfigUtil locationsConfig;
+    private GameStartManager gameStartManager;
+    private KillManager killManager;
 
     @Override
     public void onEnable() {
         loadTeamManager();
+        loadClass();
         registerCommands();
         registerListeners();
     }
@@ -40,6 +46,8 @@ public final class AnkaresPlugin extends JavaPlugin {
 
         manager.registerCommand(new TeamCommand(this));
         manager.registerCommand(new WarpCommand(this));
+        manager.registerCommand(new StartCommand(this));
+        manager.registerCommand(new AbatesCommand(this));
 
         getLogger().info("Registration of commands successfully completed!");
     }
@@ -48,11 +56,22 @@ public final class AnkaresPlugin extends JavaPlugin {
         PluginManager pluginManager = Bukkit.getPluginManager();
 
         pluginManager.registerEvents(new PlayerJoinListener(this), this);
-        pluginManager.registerEvents(new PlayerQuitListener(teamManager), this);
+        pluginManager.registerEvents(new PlayerQuitListener(this), this);
+        pluginManager.registerEvents(new PlayerInteractListener(this), this);
+        pluginManager.registerEvents(new GameStartListener(this), this);
+        pluginManager.registerEvents(new PlayerDropItemListener(), this);
+        pluginManager.registerEvents(new ScoreboardDesing(this, killManager), this);
+        pluginManager.registerEvents(new KillListener(killManager), this);
 
         CustomInventoryListener.register(this);
     }
 
+    private void loadClass() {
+        gameStartManager = new GameStartManager(teamManager);
+        killManager = new KillManager(this);
+
+        new ScoreboardDesing(this, killManager);
+    }
 
     private void loadTeamManager() {
         ScoreboardManager scoreboardManager = Bukkit.getScoreboardManager();

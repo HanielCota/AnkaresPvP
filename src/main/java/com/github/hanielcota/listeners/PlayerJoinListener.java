@@ -11,6 +11,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.inventory.ItemStack;
 
+import static com.github.hanielcota.utils.TabUtil.setHeaderFooter;
+
 public class PlayerJoinListener implements Listener {
     private final AnkaresPlugin plugin;
 
@@ -23,6 +25,9 @@ public class PlayerJoinListener implements Listener {
         Player player = event.getPlayer();
         teleportPlayerToSpawn(player);
         addItemsToPlayer(player);
+        setHeaderFooter(player, "\n§e§lANKARES\n    §7loja.ankares.com\n", "\n §7Novo modo de combate acabou de chegar na ankares.com \n");
+
+        plugin.getGameStartManager().playerJoinedGame(player);
 
         event.setJoinMessage(null);
     }
@@ -61,4 +66,5 @@ public class PlayerJoinListener implements Listener {
         player.teleport(location);
         player.sendMessage("§eTeleportado para a localização '" + locationName + "'.");
     }
+
 }

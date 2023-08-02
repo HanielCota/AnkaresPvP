@@ -58,6 +58,7 @@ public class SelectorTeamMenu extends CustomInventory {
         } else if (clickedSlot == 14) {
             handleTeamSelection(plugin.getTeamManager().getBlueTeam(), "Time Azul");
         }
+        plugin.getGameStartManager().playerJoinedGame(player);
     }
 
     private void handleTeamSelection(Team team, String teamName) {
