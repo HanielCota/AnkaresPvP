@@ -76,13 +76,15 @@ public class GameStartManager {
         }
     }
 
-    private void endGame(Player player) {
+    public void endGame(Player player) {
         gameStarted = false;
         broadcastGameEndMessage();
 
         GameEndEvent gameEndEvent = new GameEndEvent(teamManager, player);
         Bukkit.getPluginManager().callEvent(gameEndEvent);
+
     }
+
 
     private void broadcastGameEndMessage() {
         Bukkit.broadcastMessage(ChatColor.RED + "A partida terminou! Obrigado por jogar!");

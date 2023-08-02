@@ -41,6 +41,9 @@ public class GameStartListener implements Listener {
         if (playerTeamName.equalsIgnoreCase("red")) {
             teleportPlayerToTeamLocation(starter, "vermelho");
         }
+        starter.getInventory().clear();
+
+        plugin.getTimeManager().startCountdown();
     }
 
 

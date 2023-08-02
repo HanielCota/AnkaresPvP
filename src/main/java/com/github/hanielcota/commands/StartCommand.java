@@ -25,9 +25,12 @@ public class StartCommand extends BaseCommand {
             player.sendMessage("§eO jogo já está iniciado.");
             return;
         }
+        if (plugin.getTeamManager().getPlayerTeam(player) == null) {
+            player.sendMessage("§eVocê não está em um time!");
+            return;
+        }
 
         gameStartManager.forceStartGame(player);
-
         player.sendMessage("§eVocê forçou o início do jogo!");
         player.playSound(player.getLocation(), Sound.LEVEL_UP, 10F, 10F);
     }

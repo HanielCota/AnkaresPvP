@@ -1,14 +1,12 @@
 package com.github.hanielcota;
 
 import co.aikar.commands.PaperCommandManager;
-import com.github.hanielcota.commands.AbatesCommand;
-import com.github.hanielcota.commands.StartCommand;
-import com.github.hanielcota.commands.TeamCommand;
-import com.github.hanielcota.commands.WarpCommand;
+import com.github.hanielcota.commands.*;
 import com.github.hanielcota.listeners.*;
 import com.github.hanielcota.managers.GameStartManager;
 import com.github.hanielcota.managers.KillManager;
-import com.github.hanielcota.scoreboard.ScoreboardDesing;
+import com.github.hanielcota.managers.TimeManager;
+import com.github.hanielcota.scoreboard.ScoreboardDesign;
 import com.github.hanielcota.teams.TeamManager;
 import com.github.hanielcota.utils.ConfigUtil;
 import com.github.hanielcota.utils.inventory.CustomInventoryListener;
@@ -26,6 +24,7 @@ public final class AnkaresPlugin extends JavaPlugin {
     private ConfigUtil locationsConfig;
     private GameStartManager gameStartManager;
     private KillManager killManager;
+    private TimeManager timeManager;
 
     @Override
     public void onEnable() {
@@ -48,6 +47,8 @@ public final class AnkaresPlugin extends JavaPlugin {
         manager.registerCommand(new WarpCommand(this));
         manager.registerCommand(new StartCommand(this));
         manager.registerCommand(new AbatesCommand(this));
+        manager.registerCommand(new TimeCommand(this));
+        manager.registerCommand(new StopCommand(this));
 
         getLogger().info("Registration of commands successfully completed!");
     }
@@ -60,8 +61,9 @@ public final class AnkaresPlugin extends JavaPlugin {
         pluginManager.registerEvents(new PlayerInteractListener(this), this);
         pluginManager.registerEvents(new GameStartListener(this), this);
         pluginManager.registerEvents(new PlayerDropItemListener(), this);
-        pluginManager.registerEvents(new ScoreboardDesing(this, killManager), this);
+        pluginManager.registerEvents(new ScoreboardDesign(this, killManager), this);
         pluginManager.registerEvents(new KillListener(killManager), this);
+        pluginManager.registerEvents(new GameEndListener(this), this);
 
         CustomInventoryListener.register(this);
     }
@@ -69,8 +71,9 @@ public final class AnkaresPlugin extends JavaPlugin {
     private void loadClass() {
         gameStartManager = new GameStartManager(teamManager);
         killManager = new KillManager(this);
+        timeManager = new TimeManager(this, this);
 
-        new ScoreboardDesing(this, killManager);
+        new ScoreboardDesign(this, killManager);
     }
 
     private void loadTeamManager() {
