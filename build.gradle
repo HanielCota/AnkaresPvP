@@ -34,8 +34,8 @@ dependencies {
     implementation 'com.zaxxer:HikariCP:5.1.0'
 
     //annotations processor
-    annotationProcessor 'org.projectlombok:lombok:1.18.32'
-    compileOnly 'org.projectlombok:lombok:1.18.32'
+    annotationProcessor 'org.projectlombok:lombok:1.18.34'
+    compileOnly 'org.projectlombok:lombok:1.18.34'
 }
 
 
